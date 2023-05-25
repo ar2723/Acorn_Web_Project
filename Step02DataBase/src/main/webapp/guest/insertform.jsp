@@ -18,13 +18,13 @@
 			</div>
 			<div class="mb-1">
 				<label for="content" class="form-label">내용</label>
-				<textarea class="form-control" id="content" name="content"></textarea>
+				<textarea class="form-control" id="content" name="content" cols="30" rows="5"></textarea>
 			</div>
 			<div class="mb-1">
 				<label for="pwd" class="form-label">비밀번호</label>
 				<input type="text" name ="pwd" class="form-control" id ="pwd"/>
 			</div>
-			<button type="submit" class="btn btn-success">추가</button>
+			<button type="submit" class="btn btn-success">등록</button>
 			<a href="list.jsp" class="btn btn-primary">돌아가기</a>
 		</form>
 	</div>

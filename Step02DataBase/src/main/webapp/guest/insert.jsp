@@ -28,19 +28,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-5">
-		<h1>알림</h1>
+	<!-- 이 주석은 웹브라우저에게 출력되지만 웹브라우저가 무시하는 주석 -->
+	<%-- 이 주석은 jsp 페이지가 무시하는 주석(웹브라우저에 출력도지 않는다) --%>
+	<%-- 
+		javascript 응답하기 
+		여기 출력된 문자열은 클라이언트가 javascript로 해석을 하기 때문에
+		javascript 문법에 어긋나면 안된다.
+	--%>
+	<script>
 		<%if(isSuccess){ %>
-			<p class="alert alert-success">
-			<strong><%=writer %></strong> 님의 글이 추가되었습니다.
-			<a class="alert-Link" href="list.jsp">확인</a>
-			</p>
+			//알림창 띄우기
+			alert("글을 성공적으로 등록 했습니다.");
+			//javscript로 페이지 이동
+			location.href ="${pageContext.request.contextPath}/guest/list.jsp";
 		<%} else {%>
-			<p class="alert alert-danger">
-				글 작성 실패 ㅠㅠ
-				<a class="alert-Link" href="insertform.jsp">다시 작성하기</a>
-			</p>
+			alert("등록 실패!");
+			location.href ="${pageContext.request.contextPath}/guest/insertform.jsp";
 		<%} %>
-	</div>
+	</script>
 </body>
 </html>

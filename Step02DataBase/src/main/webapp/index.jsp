@@ -11,17 +11,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>index.jsp</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container">
-		<h1>인덱스 페이지 입니다.</h1>
-		<ul class="list-group">
-			<li class="list-group-item list-group-item-action"><a href="member/list.jsp">회원 목록보기</a></li>
-			<li class="list-group-item list-group-item-action"><a href="todo/list.jsp">할일 목록보기</a></li>
-			<li class="list-group-item list-group-item-action"><a href="guest/list.jsp">방명록 보기</a></li>
-		</ul>
+	<%-- 
+		/include/navbar.jsp 페이지에게 이 부분만 응답하도록 한다.
+		include 되는 jsp 페이지에 파라미터를 전달할수도 있다.
+	
+	--%>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="index" name="current"/>
+	</jsp:include>
+	<div class="container-fluid">
+		<h1 class="text-center mt-4">인덱스 페이지 입니다.</h1>
+		<!-- jsp 페이지는 서버에서 해석되고 해석된 결과가 클라이언트에게 응답이된다!! -->
+		<!-- context 경로는 서버에서 절대 경로가 필요할 때 작성하지만 아래와 달리 하드코딩을 하는 것은 좋지 않다 -->
 	</div>
 </body>
 </html>

@@ -13,24 +13,17 @@ import test.util.DbcpBean;
 
 public class GuestDao {
 	private static GuestDao dao;
-	//1.
 	private GuestDao() {}
-	//3.
 	public static GuestDao getInstance() {
-		//서버 시작후 최초 요청이라면
 		if(dao == null) {
-			//객체를 생성해서 static 필드에 저장해놓는다.
 			dao = new GuestDao();
 		}
-		//필드에 저장된 참조값 리턴해주기
 		return dao;
 	}
 	
 	public List<GuestDto> getList(){
-		//회원 목록을 담을 객체 미리 생성하기
 		List<GuestDto> list = new ArrayList<>();
 		
-		//필요한 객체의 참조값을 담을 지역변수 미리 만들기
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -50,7 +43,7 @@ public class GuestDao {
 				dto.setContent(rs.getString("content"));
 				dto.setPwd(rs.getString("pwd"));
 				dto.setDate(rs.getString("regdate"));
-				//ArrayList 객체에 누적시키기
+				
 				list.add(dto);
 			}
 		} catch (Exception se) {
@@ -67,7 +60,7 @@ public class GuestDao {
 		}
 		return list;
 	}
-	
+	//전체 글의 목록을 리턴해주는 메소드
 	public boolean insert(GuestDto dto){
 		Connection conn = null;
 		PreparedStatement pstmt = null;

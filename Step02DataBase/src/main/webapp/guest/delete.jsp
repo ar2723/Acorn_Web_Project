@@ -17,8 +17,27 @@
 	} else {
 		isSuccess = false;
 	}
-	//context 경로 얻어내기 (context 경로는 추후에 수정되거나 제거될 예정이기 때문에 메소드로 얻어낸다)
-	String cPath = request.getContextPath();
-	//리다이렉트 응답하기
-	response.sendRedirect(cPath+"/guest/list.jsp");
+	
 %>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<%if(isSuccess) {%>
+		<% 
+			//context 경로 얻어내기 (context 경로는 추후에 수정되거나 제거될 예정이기 때문에 메소드로 얻어낸다)
+			String cPath = request.getContextPath();
+			//리다이렉트 응답하기
+			response.sendRedirect(cPath+"/guest/list.jsp");
+		%>
+	<%} else {%>
+		<script>
+			alert("비밀번호가 일치하지 않습니다");
+			location.href="${pageContext.request.contextPath}/guest/deleteform.jsp?num=<%=dto.getNum()%>";
+		</script>
+	<%} %>
+</body>
+</html>
