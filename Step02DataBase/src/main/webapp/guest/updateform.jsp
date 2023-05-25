@@ -15,15 +15,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>/guest/updateform.jsp</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="container mt-3">
-		<h2>작성 글 수정</h2>
+		<h2 class="text-center mt-4">작성 글 수정</h2>
 		<form action="update.jsp" method="post">
 			<div class="mb-1">
-				<label class="form-label" for="num">번호</label>
+				<label class="form-label" for="num">글 번호</label>
 				<input class="form-control-plaintext" type="text" id="num" name="num" value="<%= dto.getNum() %>" readonly/>
 			</div>
 			<div class="mb-1">

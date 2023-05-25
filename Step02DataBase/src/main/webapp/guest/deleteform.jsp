@@ -14,8 +14,8 @@
 </head>
 <body>
 	<div class="container">
-		<h1>게시글 삭제 - 비밀번호 확인</h1>
-		<h4>글을 삭제하시려면 비밀번호을 입력하고 확인버튼을 눌러주세요!</h4>
+		<h2 class="text-center mt-4 mb-4">게시글 삭제 - 비밀번호 확인</h2>
+		<h5 class="mb-4 text-center">글을 삭제하시려면 비밀번호을 입력하고 확인버튼을 눌러주세요!</h5>
 		<form action="delete.jsp" method ="post">
 			<div class="mb-1">
 				<label for="num" class="form-label">삭제할 글 번호</label>
