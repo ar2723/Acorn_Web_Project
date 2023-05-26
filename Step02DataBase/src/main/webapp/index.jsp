@@ -17,9 +17,13 @@
 <body>
 	<%-- 
 		/include/navbar.jsp 페이지에게 이 부분만 응답하도록 한다.
-		include 되는 jsp 페이지에 파라미터를 전달할수도 있다.
-	
+		
 	--%>
+	<!-- 
+		include 되는 jsp 페이지에 파라미터를 전달할수도 있다.
+		navbar.jsp 입장에서는 ?current=index 형식의 파라미터가 전달된 것이나 마찬가지이다.
+	-->
+					  <!-- 여기서 주소는 절대경로가 아닌 상대경로로 적는다 -->
 	<jsp:include page="/include/navbar.jsp">
 		<jsp:param value="index" name="current"/>
 	</jsp:include>

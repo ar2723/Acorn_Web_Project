@@ -1,4 +1,3 @@
-<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="test.guest.dto.GuestDto"%>
 <%@page import="test.guest.dao.GuestDao"%>
 <%@page import="java.util.List"%>
