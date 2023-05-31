@@ -17,7 +17,6 @@
 <body>
 	<%-- 
 		/include/navbar.jsp 페이지에게 이 부분만 응답하도록 한다.
-		
 	--%>
 	<!-- 
 		include 되는 jsp 페이지에 파라미터를 전달할수도 있다.
