@@ -23,9 +23,11 @@
 		}
 		
 		//냉장고 문을 여는 작업을 하고 해당 작업이 끝나면 내가 전달한 함수를 호출해주세요.
-		work("냉장고 문을 연다", function(){});
-		work("코끼리를 냉장고에 넣는다", function(){});
-		work("냉장고 문을 닫는다", function(){});
+		work("냉장고 문을 연다", function(){
+			work("코끼리를 냉장고에 넣는다", function(){
+				work("냉장고 문을 닫는다", function(){});
+			});
+		});
 		
 		let p1 = new Promise(function(resolve){
 			/*
