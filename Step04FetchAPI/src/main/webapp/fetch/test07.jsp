@@ -20,6 +20,7 @@
 	<form action="login.jsp" method="post" id="myForm2">
 		<input type="text" name="id" placeholder="아이디 입력..."/>
 		<input type="password" name="pwd" placeholder="비밀번호 입력..."/>
+					<!-- 여기서 submit 이벤트의 주체는 button이 아니라 form이다 -->
 		<button type = "submit">로그인</button>
 	</form>
 	
