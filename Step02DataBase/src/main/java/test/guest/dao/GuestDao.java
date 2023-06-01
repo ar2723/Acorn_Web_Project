@@ -20,7 +20,7 @@ public class GuestDao {
 		}
 		return dao;
 	}
-	//전체 글의 목록을 리턴해주는 메소드
+	
 	public List<GuestDto> getList(){
 		List<GuestDto> list = new ArrayList<>();
 		
@@ -60,7 +60,7 @@ public class GuestDao {
 		}
 		return list;
 	}
-	
+	//전체 글의 목록을 리턴해주는 메소드
 	public boolean insert(GuestDto dto){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
