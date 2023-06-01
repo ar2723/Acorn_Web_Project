@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="test.users.dao.UsersDao"%>
 <%@page import="test.users.dto.UsersDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,6 +25,11 @@
 		//session scope에 id라는 키값으로 로그인된 아이디 담기
 		session.setAttribute("id", id);
 	}
+	
+	//로그인 후 가야할 목적지 정보
+	String url = request.getParameter("url");
+	//인코딩을 따로 하지 않으면 페이지 요청에서 전달되는 일부 parameter 값들이 유실될 수 있다.
+	String encodedUrl = URLEncoder.encode(url);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,17 +37,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
 	<%if(isValid){ %>
 		<p class="alert alert-success">
 			<strong><%=dto.getId() %></strong>님 로그인되었습니다.
-			<a href="${pageContext.request.contextPath}/index.jsp">확인</a>
+			<a href="<%=url%>">확인</a>
 		</p>
 	<%} else { %>
 		<p class="alert alert-danger">
 			아이디 혹은 비밀번호가 틀려요
-			<a href="${pageContext.request.contextPath}/users/loginform.jsp">다시 로그인</a>
+			<a href="${pageContext.request.contextPath}/users/loginform.jsp?url=<%=encodedUrl%>">다시 로그인</a>
 		</p>
 	<%}%>
 </body>
