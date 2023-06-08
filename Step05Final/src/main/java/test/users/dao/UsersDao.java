@@ -99,5 +99,150 @@ public class UsersDao {
 			return false;
 		}
 	}
+	
+	//회원 한명의 정보를 리턴하는 메소드
+	public UsersDto getData(String id) {	
+		UsersDto dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			//Connection Pool 에서 Connection 객체를 하나 얻어온다.
+			conn = new DbcpBean().getConn();
+		    //실행할 sql 문의 뼈대 구성하기
+		    String sql = "SELECT pwd, email, profile, regdate"
+		               + " FROM users"
+		               + " WHERE id=?";
+		    //sql 문의 ? 에 바인딩 할게 있으면 한다
+		    pstmt = conn.prepareStatement(sql);
+		    pstmt.setString(1, id);
+		    //SELECT 문을 수행하고 결과값을 받아온다.
+		    rs = pstmt.executeQuery();
+		    while(rs.next()) {
+		    	dto = new UsersDto();
+		    	dto.setId(id);
+		    	dto.setPwd(rs.getString("pwd"));
+		    	dto.setEmail(rs.getString("email"));
+		    	dto.setProfile(rs.getString("profile"));
+		    	dto.setRegdate(rs.getString("regdate"));
+		    }
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close(); //Connection Pool 에 Connection 반납하기
+			} catch (Exception e) {
+		    }
+		}
+		return dto;
+	}
+	
+	//프로필 이미지 경로를 수정하는 메소드
+	public boolean updateProfile(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "UPDATE users"
+					+ " SET profile = ?"
+					+ " WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, dto.getProfile());
+			pstmt.setString(2, dto.getId());
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean updatePwd(String id, String changePwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "UPDATE users"
+					+ " SET pwd = ?"
+					+ " WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, changePwd);
+			pstmt.setString(2, id);
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//개인정보를 수정하는 메소드
+	public boolean update(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "UPDATE users"
+					+ " SET email = ?, profile = ?"
+					+ " WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, dto.getEmail());
+			pstmt.setString(2, dto.getProfile());
+			pstmt.setString(3, dto.getId());
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 

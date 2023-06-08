@@ -3,10 +3,12 @@ package test.file.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import test.file.dto.FileDto;
+import test.users.dto.UsersDto;
 import test.util.DbcpBean;
 
 public class FileDao {
@@ -57,6 +59,7 @@ public class FileDao {
 	    }
 	}
 	
+	//파일 목록을 리턴하는 메소드
 	public List<FileDto> getList(){
 		List<FileDto> list = new ArrayList<>();
 		
@@ -67,10 +70,57 @@ public class FileDao {
 		try {
 			conn = new DbcpBean().getConn();
 			//실행할 sql 문
-			String sql = "SELECT num, writer, title, saveFileName, regdate"
+			String sql = "SELECT num, writer, title, orgFileName, saveFileName, regdate"
 					+ " FROM board_file"
 					+ " ORDER BY num ASC";
 			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				FileDto dto = new FileDto();
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setTitle(rs.getString("title"));
+				dto.setOrgFileName(rs.getString("orgFileName"));
+				dto.setSaveFileName(rs.getString("saveFileName"));
+				dto.setRegdate(rs.getString("regdate"));
+				list.add(dto);
+			}
+		} catch (Exception se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {}
+		}
+		return list;
+	}
+	
+	//페이징 처리된 파일 목록을 리턴하는 메소드
+	public List<FileDto> getPagingList(int num){
+		List<FileDto> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "SELECT *"
+					+ " FROM"
+					+ " (SELECT result1.*, ROWNUM AS rnum FROM"
+					+ "	(SELECT num, writer, title, saveFilename, regdate"
+					+ "	FROM board_file"
+					+ "	ORDER BY num DESC) result1)"
+					+ " WHERE rnum BETWEEN ? AND ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (num-1)*10 + 1);
+			pstmt.setInt(2, num*10);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				FileDto dto = new FileDto();
@@ -96,4 +146,76 @@ public class FileDao {
 		return list;
 	}
 	
+	//파일 하나의 정보를 리턴해주는 메소드
+	public FileDto getData(int num) {
+		FileDto dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "SELECT writer, title, orgFileName, saveFileName, fileSize, regdate"
+					+ " FROM board_file"
+					+ " WHERE num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				dto = new FileDto();
+				dto.setNum(num);
+				dto.setWriter(rs.getString("writer"));
+				dto.setTitle(rs.getString("title"));
+				dto.setOrgFileName(rs.getString("orgFileName"));
+				dto.setSaveFileName(rs.getString("saveFileName"));
+				dto.setFileSzie(rs.getLong("fileSize"));
+				dto.setRegdate(rs.getString("regdate"));
+			}
+		} catch(SQLException se){
+			se.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {}
+		}
+		return dto;
+	}
+	
+	//파일 정보를 삭제하는 메소드
+	public boolean delete(int num){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "DELETE FROM board_file"
+					+ " WHERE num = ?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setInt(1, num);
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

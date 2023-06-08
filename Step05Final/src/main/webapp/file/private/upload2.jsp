@@ -3,7 +3,7 @@
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.io.File"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	//파일 시스템 상에서 webapp의 upload 폴더 까지의 절대 경로를 얻어낸다.
@@ -41,25 +41,4 @@
 	//DB에 저장하고 응답하기
 	boolean isSuccess = FileDao.getInstance().insert(dto);
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>/file/private/upload.jsp</title>
-</head>
-<body>
-	<%if(isSuccess) {%>
-		<p>
-			<%=writer %> 님이 업로드한 <%=orgFileName %> 파일을 저장했습니다.
-			<a href="${pageContext.request.contextPath}/file/list.jsp?pageNum=1">목록보기</a>
-		</p>
-		<p><%=realPath %></p>
-	<%} else {%>
-		<p>
-			업로드 실패!
-			<a href="upload_form.jsp">다시 시도</a>
-		</p>
-	<%} %>
-</body>
-</html>
+{"isSuccess": <%=isSuccess %>,"saveFileName":"<%=saveFileName %>"}

@@ -19,3 +19,13 @@ CREATE TABLE board_file(
 );
 
 CREATE SEQUENCE board_file_seq;
+
+--페이징 처리를 위한 셀렉트 문
+SELECT *
+FROM
+	(SELECT result1.*, ROWNUM AS rnum
+	FROM
+		(SELECT num, writer, title, savefilename, regdate
+		FROM board_file
+		ORDER BY num ASC) result1)
+WHERE rnum BETWEEN 1 AND 10;
