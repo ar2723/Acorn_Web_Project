@@ -27,5 +27,18 @@ FROM
 	FROM
 		(SELECT num, writer, title, savefilename, regdate
 		FROM board_file
-		ORDER BY num ASC) result1)
-WHERE rnum BETWEEN 1 AND 10;
+		ORDER BY num DESC) result1)
+WHERE rnum BETWEEN 1 AND 5;
+
+--게시글을 저장할 테이블
+CREATE TABLE board_cafe(
+	num NUMBER PRIMARY KEY, -- 글번호
+	writer VARCHAR2(100) NOT NULL, -- 작성자
+	title VARCHAR2(100) NOT NULL, -- 글 제목
+	content CLOB, -- 글 내용
+	viewCount NUMBER, -- 조회수
+	regdate DATE 
+);
+
+-- 게시글의 번호를 얻어낼 시퀀스
+CREATE SEQUENCE board_cafe_seq NOCACHE;

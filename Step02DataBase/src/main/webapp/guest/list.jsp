@@ -38,12 +38,12 @@
 		<table class="table table-striped table-hover">
 			<thead class ="text-center">
 				<tr>
-				<th>번호</th>
-				<th>작성자</th>
-				<th>내용</th>
-				<th>작성날짜</th>
-				<th>수정하기</th>
-				<th>삭제하기</th>
+					<th>번호</th>
+					<th>작성자</th>
+					<th>내용</th>
+					<th>작성날짜</th>
+					<th>수정하기</th>
+					<th>삭제하기</th>
 				</tr>
 			</thead>
 			<tbody class ="text-center">

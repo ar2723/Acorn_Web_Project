@@ -8,6 +8,8 @@ public class FileDto {
 	private String saveFileName;
 	private long fileSize; //파일의 크기는 byte 단위로 큰 정수를 쓰기 때문에 long int를 사용한다.
 	private String regdate;
+	private int startRowNum;
+	private int endRowNum;
 	
 	public FileDto() {}
 
@@ -29,6 +31,22 @@ public class FileDto {
 
 	public void setNum(int num) {
 		this.num = num;
+	}
+	
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
 	}
 
 	public String getWriter() {
@@ -78,6 +96,4 @@ public class FileDto {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	};
-	
-	
 }

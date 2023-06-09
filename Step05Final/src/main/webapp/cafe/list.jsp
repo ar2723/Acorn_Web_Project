@@ -1,10 +1,12 @@
-<%@page import="test.file.dto.FileDto"%>
-<%@page import="java.util.List"%>
 <%@page import="test.file.dao.FileDao"%>
+<%@page import="test.file.dto.FileDto"%>
+<%@page import="test.cafe.dao.CafeDao"%>
+<%@page import="java.util.List"%>
+<%@page import="test.cafe.dto.CafeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//한 페이지에 몇개씩 표시할 것인지
+//한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT = 5;
 
 	//하단페이지를 몇개씩 표시할 것인지
@@ -39,66 +41,62 @@
 	int endRowNum = pageNum * PAGE_ROW_COUNT;
 		
 	//FileDto에 startRowNum과 endRowNum을 담아서
-	FileDto dto = new FileDto();
+	CafeDto dto = new CafeDto();
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
-	List<FileDto> list = FileDao.getInstance().getList(dto);
-	
-	String id = (String)session.getAttribute("id");
+	List<CafeDto> list = CafeDao.getInstance().getList(dto);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>/file/list.jsp</title>
+<title>/cafe/list.jsp</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <style>
-	.wrapper{
-		display: flex;
+	.wrapper {
+		display:flex;
 		justify-content: center;
+	}
+	
+	.contentLink {
+		color: inherit;
+  		text-decoration: none;
+	}
+	.contentLink:hover{
+		text-decoration: underline;
 	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1>자료실 목록입니다.</h1>
-		<div class ="text-end">
-			<a href="${pageContext.request.contextPath}/file/private/upload_form.jsp">업로드하기</a>
-			<br />
-			<a href="${pageContext.request.contextPath}/file/private/upload_form2.jsp">ajax 업로드하기</a>
+		<h1>게시글 목록 입니다</h1>
+		<div class="text-end">
+		<a href="private/insertform.jsp">새글 작성</a>
 		</div>
-		
 		<table class="table table-striped table-hover">
 			<thead class ="text-center">
 				<tr>
-					<th>번호</th>
-					<th>작성자</th>
+					<th>글번호</th>
+					<th>글작성자</th>
 					<th>제목</th>
-					<th>파일명</th>
+					<th>조회수</th>
 					<th>등록일</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody class ="text-center">
-				<% for(FileDto tmp : list) {%>
+				<% for(CafeDto tmp : list) {%>
 					<tr>
 						<td><%= tmp.getNum()%></td>
 						<td><%= tmp.getWriter()%></td>
-						<td><%= tmp.getTitle()%></td>
 						<td>
-							<a href="download.jsp?num=<%=tmp.getNum()%>"><%=tmp.getSaveFileName()%></a>
+							<a class="contentLink" href="private/updateform.jsp?num=<%= tmp.getNum()%>"><%= tmp.getTitle() %></a>
 						</td>
-						<td><%= tmp.getRegdate()%></td>
-						<td>
-							<!-- 글 작성자와 로그인된 아이디와 같을 때만 삭제 링크 출력하기 -->
-							<%if(tmp.getWriter().equals(id)) {%>
-								<a href="delete.jsp?num=<%=tmp.getNum()%>">삭제</a>
-							<%} else %>
-						</td>	
+						<td><%= tmp.getViewCount()%></td>
+						<td><%= tmp.getRegdate() %></td>
 					</tr>
-				<%} %>
+				<% }%>
 			</tbody>
 		</table>
 		<div class="wrapper">

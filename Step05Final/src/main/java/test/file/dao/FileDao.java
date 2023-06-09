@@ -60,7 +60,7 @@ public class FileDao {
 	}
 	
 	//파일 목록을 리턴하는 메소드
-	public List<FileDto> getList(){
+	public List<FileDto> getListAll(){
 		List<FileDto> list = new ArrayList<>();
 		
 		Connection conn = null;
@@ -100,10 +100,9 @@ public class FileDao {
 		return list;
 	}
 	
-	//페이징 처리된 파일 목록을 리턴하는 메소드
-	public List<FileDto> getPagingList(int num){
+	//페이지에 해당하는 목록만 리턴하는 메소드
+	public List<FileDto> getList(FileDto dto){
 		List<FileDto> list = new ArrayList<>();
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -119,17 +118,17 @@ public class FileDao {
 					+ "	ORDER BY num DESC) result1)"
 					+ " WHERE rnum BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (num-1)*10 + 1);
-			pstmt.setInt(2, num*10);
+			pstmt.setInt(1, dto.getStartRowNum());
+			pstmt.setInt(2, dto.getEndRowNum());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				FileDto dto = new FileDto();
-				dto.setNum(rs.getInt("num"));
-				dto.setWriter(rs.getString("writer"));
-				dto.setTitle(rs.getString("title"));
-				dto.setSaveFileName(rs.getString("saveFileName"));
-				dto.setRegdate(rs.getString("regdate"));
-				list.add(dto);
+				FileDto tmp = new FileDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setSaveFileName(rs.getString("saveFileName"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
 			}
 		} catch (Exception se) {
 			se.printStackTrace();
@@ -144,6 +143,44 @@ public class FileDao {
 			} catch (Exception e) {}
 		}
 		return list;
+	}
+	
+	//전체 글의 갯수를 리턴해주는 메소드
+	public int getCount() {
+		//글의 갯수를 담을 지역변수
+		int count = 0;
+		//필요한 객체의 참조값을 담을 지역변수 미리 만들기
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "SELECT MAX(ROWNUM) AS num FROM board_file";
+			pstmt = conn.prepareStatement(sql);
+			//sql문이 미완성이라면 여기서 완성
+
+			//select 문 수행하고 결과값 받아오기
+			rs = pstmt.executeQuery();
+			//반복문 돌면서 ResultSet에 담긴 내용 추출
+			while (rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return count;
 	}
 	
 	//파일 하나의 정보를 리턴해주는 메소드

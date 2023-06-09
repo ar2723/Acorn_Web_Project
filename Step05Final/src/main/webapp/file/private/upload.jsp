@@ -52,7 +52,7 @@
 	<%if(isSuccess) {%>
 		<p>
 			<%=writer %> 님이 업로드한 <%=orgFileName %> 파일을 저장했습니다.
-			<a href="${pageContext.request.contextPath}/file/list.jsp?pageNum=1">목록보기</a>
+			<a href="${pageContext.request.contextPath}/file/list.jsp?">목록보기</a>
 		</p>
 		<p><%=realPath %></p>
 	<%} else {%>
