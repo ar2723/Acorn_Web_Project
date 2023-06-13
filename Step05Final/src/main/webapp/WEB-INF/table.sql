@@ -35,7 +35,7 @@ CREATE TABLE board_cafe(
 	num NUMBER PRIMARY KEY, -- 글번호
 	writer VARCHAR2(100) NOT NULL, -- 작성자
 	title VARCHAR2(100) NOT NULL, -- 글 제목
-	content CLOB, -- 글 내용
+	content CLOB, -- 글 내용 / 자바에서 취급할 때는 동일한 기능을 하고, 용량이 VARCHAR2에 비해 더 클 뿐이다.
 	viewCount NUMBER, -- 조회수
 	regdate DATE 
 );

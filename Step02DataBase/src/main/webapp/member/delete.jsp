@@ -1,6 +1,6 @@
 <%@page import="test.member.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <% 
 	/*
 		이 페이지에 요청이 될 때 <a href ="delete.jsp?num=x"></a> 형식의 링크를 눌러서

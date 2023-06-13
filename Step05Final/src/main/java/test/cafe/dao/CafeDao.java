@@ -12,12 +12,23 @@ import test.file.dto.FileDto;
 import test.util.DbcpBean;
 
 public class CafeDao {
+	//static 필드
 	private static CafeDao dao;
-	private CafeDao() {}
+	/*
+	 * static 메소드는 생성자를 호출하지 않고 클래스명으로 바로 호출을 하기 때문에
+	 * 메소드 호출전에 무언가 준비 작업을 하고 싶다면 static 블럭 안에서 하면 된다.
+	 * static 블럭은 해당 클래스를 최초로 사용할 때 한번만 실행되기 때문에
+	 * 초기화 작업을 하기에 적당한 블럭이다.
+	 */
+	static {
+		dao = new CafeDao();
+	}
+	//외부에서 객체 생성하지 못하도록
+	private CafeDao() {};
+	
+	//static 메소드
 	public static CafeDao getInstance() {
-		if(dao == null) {
-			dao = new CafeDao();
-		}
+		//여기서 리턴해주는 값은 null이 아니다.
 		return dao;
 	}
 	
@@ -113,8 +124,8 @@ public class CafeDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = "INSERT INTO board_cafe"
-					+ " (num, writer, title, content, regdate)"
-					+ " VALUES(board_cafe_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
+					+ " (num, writer, title, content, viewCount, regdate)"
+					+ " VALUES(board_cafe_seq.NEXTVAL, ?, ?, ?, 0, SYSDATE)";
 			pstmt = conn.prepareStatement(sql);
 			//실행할 sql 문이 미완성이라면 여기서 완성
 			pstmt.setString(1, dto.getWriter());
@@ -186,7 +197,7 @@ public class CafeDao {
 		try {
 			conn = new DbcpBean().getConn();
 			//실행할 sql 문
-			String sql = "SELECT writer, title, content, viewCount"
+			String sql = "SELECT writer, title, content, viewCount, regdate"
 					+ " FROM board_cafe"
 					+ " WHERE num = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -200,6 +211,7 @@ public class CafeDao {
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
 				dto.setViewCount(rs.getInt("viewCount"));
+				dto.setRegdate(rs.getString("regdate"));
 			}
 		} catch (Exception se) {
 			se.printStackTrace();
@@ -256,12 +268,12 @@ public class CafeDao {
 			conn = new DbcpBean().getConn();
 			String sql = "UPDATE board_cafe"
 					+ " SET title = ?, content = ?"
-					+ " WHERE writer = ?";
+					+ " WHERE num = ?";
 			pstmt = conn.prepareStatement(sql);
 			//실행할 sql 문이 미완성이라면 여기서 완성
-			pstmt.setString(3, dto.getWriter());
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getNum());
 			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -281,5 +293,43 @@ public class CafeDao {
 		} else {
 			return false;
 		}
+	}
+	
+	//전체 글의 갯수를 리턴해주는 메소드
+	public int getCount() {
+		//글의 갯수를 담을 지역변수
+		int count = 0;
+		//필요한 객체의 참조값을 담을 지역변수 미리 만들기
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "SELECT MAX(ROWNUM) AS num FROM board_cafe";
+			pstmt = conn.prepareStatement(sql);
+			//sql문이 미완성이라면 여기서 완성
+
+			//select 문 수행하고 결과값 받아오기
+			rs = pstmt.executeQuery();
+			//반복문 돌면서 ResultSet에 담긴 내용 추출
+			while (rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return count;
 	}
 }

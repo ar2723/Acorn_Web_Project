@@ -2,17 +2,28 @@
 <%@page import="test.cafe.dto.CafeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	String id = (String)session.getAttribute("id");
-	String title = request.getParameter("title");
-	String content = request.getParameter("content");
-	
+    
+<!-- 
 	CafeDto dto = new CafeDto();
-	dto.setWriter(id);
-	dto.setTitle(title);
-	dto.setContent(content);
 	
+	int num = Integer.parseInt(request.getParameter("num"));
+	dto.setNum(num);
+	
+	String title = request.getParameter("title");
+	dto.setTitle(title);
+	
+	String content = request.getParameter("content");
+	dto.setContent(content);
+-->
+<jsp:useBean id="dto" class="test.cafe.dto.CafeDto"/>
+<jsp:setProperty  property = "num" name="dto"/>
+<jsp:setProperty  property = "title" name="dto"/>
+<jsp:setProperty  property = "content" name="dto"/>
+
+<%
+	// 위의 jsp 액션태그로 생성된 CafeDto 객체에 담긴 글 내용을 수정반영하고
 	boolean isSuccess = CafeDao.getInstance().update(dto);
+	//응답하기
 %>
 <!DOCTYPE html>
 <html>
@@ -20,16 +31,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<script>
-		<%if(isSuccess){%>
-			alert("게시글을 수정(저장)했습니다.");
-			location.href="${pageContext.request.contextPath}/cafe/list.jsp";
-		<%} else {%>
-			alert("수정(저장) 실패");
-			location.href="updateform.jsp";
-		<%}%>
-	</script>
+	<div class="container pt-5">
+		<%if(isSuccess){ %>
+           <p class="alert alert-success">
+               수정 했습니다.
+              <a href="${pageContext.request.contextPath }/cafe/detail.jsp?num=<%=dto.getNum()%>">확인</a>
+           </p>
+        <%}else{ %>
+           <p class="alert alert-danger">
+              수정 실패했습니다.
+              <a href="updateform.jsp?num=<%=dto.getNum() %>">다시 수정하러 가기</a>
+           </p>
+        <%} %>
+	</div>
 </body>
 </html>

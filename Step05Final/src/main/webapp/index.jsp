@@ -13,24 +13,38 @@
 <title>index.jsp</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+	ul{
+		display:flex;
+		list-style-type: none;
+		justify-content: center;
+	}
+	li{
+		padding-right: 20px;
+		padding-left:20px;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
 		<%if(id != null){%>
-		<p>
-			<a href="${pageContext.request.contextPath}/users/private/info.jsp"><%=id%></a> 님이 로그인 했습니다.
-			<a href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
-		</p>
+			<p class="text-end mt-2">
+				<a href="${pageContext.request.contextPath}/users/private/info.jsp"><%=id%></a> 님이 로그인 했습니다.
+				<a href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
+			</p>
+		<%} else{ %>
+			<p class="text-end mt-2">
+				<a href="${pageContext.request.contextPath}/users/signup_form.jsp">회원가입</a>
+				<a href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>
+			</p>
 		<%} %>
-		<h1>인덱스 페이지 입니다.</h1>
+		<h1 class="text-center">인덱스 페이지</h1>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/users/signup_form.jsp">회원가입</a></li>
-			<li><a href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a></li>
-			<li><a href="${pageContext.request.contextPath}/private/game.jsp">게임하기(로그인필요)</a></li>
-			<li><a href="${pageContext.request.contextPath}/private/study.jsp">공부하기(로그인필요)</a></li>
+			<li><a href="cafe/list.jsp">게시판</a></li>
 			<li><a href="file/list.jsp">자료실</a></li>
-			<li><a href="test/signup_form.jsp">form 테스트</a></li>
-			<li><a href="cafe/list.jsp">글 목록보기</a></li>
+			<li><a href="${pageContext.request.contextPath}/private/game.jsp">게임하기</a></li>
+			<li><a href="${pageContext.request.contextPath}/private/study.jsp">공부하기</a></li>
+			<li><a href="test/signup_form.jsp"> 회원가입 form 테스트</a></li>
 		</ul>
 	</div>
 </body>

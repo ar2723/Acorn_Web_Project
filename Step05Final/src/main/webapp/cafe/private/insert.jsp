@@ -4,21 +4,23 @@
     pageEncoding="UTF-8"%>
     
 <%
+	//글 작성자 얻어내기
 	String id = (String)session.getAttribute("id");
 
-	//요청 파라미터 추출
+	//폼 전송되는 title, content 읽어내기
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
 	
-	//MemberDao 객체의 참조값 얻어오기
-	CafeDao dao = CafeDao.getInstance();
+	//CafeDto에 담기
 	CafeDto dto = new CafeDto();
 	dto.setWriter(id);
 	dto.setTitle(title);
 	dto.setContent(content);
-
-	boolean isSuccess = dao.insert(dto);
+	
+	//DB에 저장하기
+	boolean isSuccess = CafeDao.getInstance().insert(dto);
 %>
+
 <!DOCTYPE html>
 <html>
 <head>

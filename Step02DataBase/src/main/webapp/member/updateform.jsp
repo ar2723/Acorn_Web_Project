@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="test.member.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <% 	
 	/*
 		1. 수정할 폼을 제공하는 jsp 페이지
@@ -25,23 +25,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="container">
 		<h1>회원 정보 수정 양식</h1>
 		<form action="update.jsp" method="post">
 			<div class="mb-1">
-				<label class="form-label" for="num">번호</label>
-				<input class="form-control" type="text" id="num" name="num" value="<%= dto.getNum() %>" readonly/>
+				<label class="form-label" for="num">번호</label> <input
+					class="form-control" type="text" id="num" name="num"
+					value="<%= dto.getNum() %>" readonly />
 			</div>
 			<div class="mb-1">
-				<label class="form-label" for="name">이름</label>
-				<input class="form-control" type="text" id="name" name="name" value="<%= dto.getName() %>"/>
+				<label class="form-label" for="name">이름</label> <input
+					class="form-control" type="text" id="name" name="name"
+					value="<%= dto.getName() %>" />
 			</div>
 			<div class="mb-1">
-				<label class="form-label" for="addr">주소</label>
-				<input class="form-control" type="text" id="addr" name="addr" value="<%= dto.getAddr() %>"/>
+				<label class="form-label" for="addr">주소</label> <input
+					class="form-control" type="text" id="addr" name="addr"
+					value="<%= dto.getAddr() %>" />
 			</div>
 			<button class="btn btn-outline-primary" type="submit">수정확인</button>
 			<button class="btn btn-outline-warning" type="reset">취소</button>

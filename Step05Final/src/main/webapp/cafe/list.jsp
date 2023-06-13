@@ -1,5 +1,3 @@
-<%@page import="test.file.dao.FileDao"%>
-<%@page import="test.file.dto.FileDto"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@page import="java.util.List"%>
 <%@page import="test.cafe.dto.CafeDto"%>
@@ -10,7 +8,7 @@
 	final int PAGE_ROW_COUNT = 5;
 
 	//하단페이지를 몇개씩 표시할 것인지
-	final int PAGE_DISPLAY_COUNT = 2;
+	final int PAGE_DISPLAY_COUNT = 3;
 	
 	//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 	int pageNum = 1;
@@ -21,13 +19,12 @@
 	if(strNum != null){
 		pageNum = Integer.parseInt(strNum);
 	}
-
 		//하단 시작 페이지 번호
 		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 		//하단 끝 페이지 번호
 		int endPageNum = startPageNum + PAGE_DISPLAY_COUNT - 1;
 		//전체 글의 갯수
-		int totalRow = FileDao.getInstance().getCount();
+		int totalRow = CafeDao.getInstance().getCount();
 		//전체 페이지의 갯수 구하기
 		int totalPageCount = (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 		//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
@@ -75,8 +72,8 @@
 		<div class="text-end">
 		<a href="private/insertform.jsp">새글 작성</a>
 		</div>
-		<table class="table table-striped table-hover">
-			<thead class ="text-center">
+		<table class="table table-striped">
+			<thead class ="table-dark text-center">
 				<tr>
 					<th>글번호</th>
 					<th>글작성자</th>
@@ -91,7 +88,7 @@
 						<td><%= tmp.getNum()%></td>
 						<td><%= tmp.getWriter()%></td>
 						<td>
-							<a class="contentLink" href="private/updateform.jsp?num=<%= tmp.getNum()%>"><%= tmp.getTitle() %></a>
+							<a class="contentLink" href="detail.jsp?num=<%= tmp.getNum()%>"><%= tmp.getTitle() %></a>
 						</td>
 						<td><%= tmp.getViewCount()%></td>
 						<td><%= tmp.getRegdate() %></td>
@@ -99,7 +96,7 @@
 				<% }%>
 			</tbody>
 		</table>
-		<div class="wrapper">
+		<nav class="wrapper">
 			<ul class="pagination">
 				<%-- 
 					startPageNum이 1이 아닌 경우에만 Prev 링크를 제공한다.
@@ -120,7 +117,7 @@
 				</li>
 				<%} %>
 			</ul>
-		</div>
+		</nav>
 	</div>
 </body>
 </html>
