@@ -16,6 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>/users/private/info.jsp</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 	#profileImage{
 		width: 100px;
@@ -26,6 +27,9 @@
 </style>
 </head>
 <body>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="info" name="current"/>
+	</jsp:include>
 	<div class="container">
 		<h1>가입 정보 입니다.</h1>
 		<table class="table">

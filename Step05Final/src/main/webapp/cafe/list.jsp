@@ -67,6 +67,9 @@
 </style>
 </head>
 <body>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="cafe_list" name="current"/>
+	</jsp:include>
 	<div class="container">
 		<h1>게시글 목록 입니다</h1>
 		<div class="text-end">

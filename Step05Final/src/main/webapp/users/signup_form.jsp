@@ -10,6 +10,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="signup" name="current"/>
+	</jsp:include>
 	<div class="container">
 		<h3>회원 가입 폼 입니다.</h3>
 		<form action="signup.jsp" method="post" id="signupForm">

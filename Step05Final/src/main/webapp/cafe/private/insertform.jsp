@@ -10,6 +10,13 @@
 </head>
 <body>
 	<div class="container">
+		<nav>
+		  	<ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
+			    <li class="breadcrumb-item"><a href="../list.jsp">Cafe</a></li>
+			    <li class="breadcrumb-item active">Insert</li>
+		  	</ol>
+		</nav>
 		<h1>새글 작성 양식</h1>
 		<form class="form" action="insert.jsp" method="post">
 			<div>

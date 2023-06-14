@@ -38,9 +38,9 @@ public class LoginFilter implements Filter{
 	    	//2. 만일 로그인을 했으면 관여하지 않고 요청의 흐름을 이어간다.
 	        chain.doFilter(request, response);
 	        
-	    }else {
+	    } else {
 	    	/*
-	         *  로그인 페이지로 강제 리다일렉트 됬다면 
+	         *  로그인 페이지로 강제 리다이렉트 됬다면 
 	         *  로그인 성공후에 원래 가려던 목적지로 다시 보내야 하고
 	         *  GET 방식 전송 파라미터가 있다면 파라미터 정보도 같이 가지고 갈수 있도록 해야한다.
 	         */

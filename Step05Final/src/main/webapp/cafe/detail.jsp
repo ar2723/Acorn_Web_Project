@@ -19,6 +19,13 @@
 </head>
 <body>
 	<div class="container">
+		<nav>
+		  	<ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="../index.jsp">Home</a></li>
+			    <li class="breadcrumb-item"><a href="list.jsp">Cafe</a></li>
+			    <li class="breadcrumb-item active">Detail</li>
+		  	</ol>
+		</nav>
 		<h3>글 상세보기</h3>
 		<table class="table table-bordered table-striped">
 			<tr>

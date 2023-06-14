@@ -113,7 +113,7 @@ public class FileDao {
 			String sql = "SELECT *"
 					+ " FROM"
 					+ " (SELECT result1.*, ROWNUM AS rnum FROM"
-					+ "	(SELECT num, writer, title, saveFilename, regdate"
+					+ "	(SELECT num, writer, title, saveFilename, fileSize, regdate"
 					+ "	FROM board_file"
 					+ "	ORDER BY num DESC) result1)"
 					+ " WHERE rnum BETWEEN ? AND ?";
@@ -127,6 +127,7 @@ public class FileDao {
 				tmp.setWriter(rs.getString("writer"));
 				tmp.setTitle(rs.getString("title"));
 				tmp.setSaveFileName(rs.getString("saveFileName"));
+				tmp.setFileSzie(rs.getLong("fileSize"));
 				tmp.setRegdate(rs.getString("regdate"));
 				list.add(tmp);
 			}

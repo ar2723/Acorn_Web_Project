@@ -3,6 +3,7 @@
 <%@page import="test.file.dao.FileDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	//한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT = 5;
@@ -62,21 +63,24 @@
 </style>
 </head>
 <body>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="file_list" name="current"/>
+	</jsp:include>
 	<div class="container">
 		<h1>자료실 목록입니다.</h1>
 		<div class ="text-end">
 			<a href="${pageContext.request.contextPath}/file/private/upload_form.jsp">업로드하기</a>
-			<br />
 			<a href="${pageContext.request.contextPath}/file/private/upload_form2.jsp">ajax 업로드하기</a>
 		</div>
 		
-		<table class="table table-striped table-hover">
-			<thead class ="text-center">
+		<table class="table table-striped">
+			<thead class ="text-center table-dark">
 				<tr>
 					<th>번호</th>
 					<th>작성자</th>
 					<th>제목</th>
 					<th>파일명</th>
+					<th>파일크기</th>
 					<th>등록일</th>
 					<th></th>
 				</tr>
@@ -90,6 +94,7 @@
 						<td>
 							<a href="download.jsp?num=<%=tmp.getNum()%>"><%=tmp.getSaveFileName()%></a>
 						</td>
+						<td><%= tmp.getFileSize() %> byte</td>
 						<td><%= tmp.getRegdate()%></td>
 						<td>
 							<!-- 글 작성자와 로그인된 아이디와 같을 때만 삭제 링크 출력하기 -->
