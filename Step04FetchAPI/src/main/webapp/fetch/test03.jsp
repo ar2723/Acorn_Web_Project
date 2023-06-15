@@ -26,8 +26,7 @@
 						 <li>이렇쿵</li>" 형식의 문자열이다.
 					*/
 					// ul 요소가 끝나기 직전에 HTML로 평가해서 추가하기
-					document.querySelector("#msgList")
-					.insertAdjacentHTML("beforeend", data);
+					document.querySelector("#msgList").insertAdjacentHTML("beforeend", data);
 				});
 			}		
 		)

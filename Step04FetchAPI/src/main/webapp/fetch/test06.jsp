@@ -21,7 +21,7 @@
 													//즉, JSON.parse를 따로 해줄 필요가 없다는 것이다.
 				fetch("get_msg2.jsp").then((res) => res.json())
 				.then((data) => {
-					//data는 ["어쩌구", "저쩌구", "이렇쿵"] 형식의 실제 배열이다.
+					//data는 ["어쩌구", "저쩌구", "이렇쿵"] 형식의 '실제 배열'이다.
 					console.log(data);
 					//반복문 돌면서
 					for(let i = 0; i < data.length; i++){
