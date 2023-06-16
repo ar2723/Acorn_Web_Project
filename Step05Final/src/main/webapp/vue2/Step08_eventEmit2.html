@@ -12,6 +12,7 @@
         <friend-component 
             v-bind:list="members"
             v-on:delete="deleteMember"></friend-component>
+            <!-- 자식 컴포넌트에서 전달받은 이벤트명에 따라 deleteMembet 메소드를 실행 -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -20,6 +21,8 @@
                 <ul>
                     <li v-for="(item, index) in list">
                         {{item}}
+                        				   //child 컴포넌트에서 delete라는 이름의 이벤트를 발생시키고
+                        				   //인덱스인 i를 root 컴포넌트에 전달
                         <button v-on:click="deleteItem(index)">삭제</button>
                     </li>
                 </ul>    
@@ -38,8 +41,9 @@
                 members:['김구라','해골','원숭이']
             },
             methods:{
+            	//delete라는 이름의 이벤트가 발생하면 아래의 메소드가 호출되어 실행
                 deleteMember(index){
-                	//members 모델(배열) 에서 index 에 해당하는 아이템 1개 삭제
+                	//members 모델(배열) 에서 index 에 해당하는 아이템 1개를 삭제
                     this.members.splice(index, 1);
                 }
             }

@@ -9,7 +9,10 @@
 <body>
     <h1>자식 component 에서 발생하는 이벤트</h1>
     <div id="app">
-        <my-component v-on:mom="feed"></my-component>
+    	<button v-on:click="onClick"></button>
+    		  <!-- [커스텀 이벤트] = [실행할 함수] -->
+        <my-component v-on:mom = "feed"></my-component>
+        <my-component @mom = "feed"></my-component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -21,7 +24,7 @@
             `,
             methods:{
                 callMom(){
-                    // this.$emit("이벤트명", 전달할 data)
+                    // this.$emit("이벤트명", 이벤트가 발생할 때 실행하는 함수에 전달하는 data)
                     this.$emit("mom", "배고파");
                 }
             }
@@ -30,6 +33,7 @@
         let app=new Vue({
             el:"#app",
             methods:{
+            	//이벤트가 발생했을 때 실행되는 함수, 여기서 data는 부모 컴포넌트에서 전달한 값이 들어간다.
                 feed(data){
                     alert(data);
                 }

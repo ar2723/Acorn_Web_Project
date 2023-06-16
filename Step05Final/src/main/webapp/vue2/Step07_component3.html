@@ -37,13 +37,16 @@
 
         let app=new Vue({
             el:"#app",
+            //data에 object type(model)을 대입
             data:{
                 greet:"안녕하세요!"
             }
         });
         let app2=new Vue({
             el:"#app2",
+            //data에 function type을 대입
             data:function(){
+            	//여기서 model은 함수 자체가 아닌 함수에서 리턴되는 오브젝트이다.
                 return {
                     greet:"안녕하세요!"
                 };
@@ -51,6 +54,7 @@
         });
         let app3=new Vue({
             el:"#app3",
+            //app2의 data의 function을 아래와 같이 줄여 쓸 수 있다.
             data(){
                 return {
                     greet:"안녕하세요!"

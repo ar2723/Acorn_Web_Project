@@ -22,15 +22,17 @@
         <my-component></my-component>
         <my-component></my-component>
         <input type="text" v-model="msg"/>
-        				 <!-- [prop]    [data]  -->
+        				 
         <your-component v-bind:greet="'안녕하세요!'"></your-component>
-        <your-component v-bind:greet="msg"></your-component>
+        				 <!-- [prop] [data] -->
+        <your-component v-bind:greet="msg" v-bind:a="" v-bind:b=""></your-component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         let app=new Vue({
             el:"#app",
             data:{
+            	//v-model 초기값
             	msg:""
             },
             <!-- root-component -->
@@ -41,7 +43,8 @@
                 "your-component":{
                 					           //double brace로 data가 표시될 부분을 템플릿에 미리 작성
                     template:"<div class='box'>{{greet}}</div>",
-                    props:["greet"]
+                    //props = properties
+                    props:["greet", "a", "b"]
                 }
             }
         });
