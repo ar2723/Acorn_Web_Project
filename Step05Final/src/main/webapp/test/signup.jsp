@@ -24,6 +24,7 @@
 		}
 		//문자열에서 특정 문자("/")로 구분해서 String[]을 얻어내기
 		String[] result = hobbyResult.split("/");
+		request.setAttribute("result", result);
 		
 		//문자열에 특정 문자가 포함되어 있는지 여부 알아내기
 		boolean isContain = hobbyResult.contains("xxx");
@@ -52,26 +53,26 @@
 		<p>회원님의 정보를 성공적으로 저장했습니다.</p>
 		<form action="signup.jsp" method="post">
                   <div class="form-floating mb-3">
-                        <input class="form-control" type="text" name="id" id="id" placeholder="아이디 입력" value=<%=id%>>
+                        <input class="form-control" type="text" name="id" id="id" placeholder="아이디 입력" value=${param.id}>
                         <label for="id">아이디</label>
                   </div>
                   <div class="form-floating mb-3">
-                        <input class="form-control" type="password" name="pwd" id="pwd" placeholder="비밀번호 입력" value=<%=pwd%>>
+                        <input class="form-control" type="password" name="pwd" id="pwd" placeholder="비밀번호 입력" value=${param.pwd}>
                         <label for="pwd">비밀번호</label>
                   </div>
                   <select class="form-select mb-3" id="job">
                         <option value="">직업선택</option>
-                        <option value="programmer" <%= job.equals("programmer") ? "selected": "" %>>프로그래머</option>
-                        <option value="doctor" <%= job.equals("doctor") ? "selected": "" %>>의사</option>
+                        <option value="programmer" ${param.job eq "programmer" ? "selected":""}>프로그래머</option>
+                        <option value="doctor" ${param.job eq "doctor" ? "selected":""}>의사</option>
                   </select>
                   <fieldset>
                         <legend>성별 체크</legend>
                               <div class="form-check form-check-inline mb-3">
-                                    <input class="form-check-input" value="man" type="radio" id="one" name="gender" <%= gender.equals("man") ? "checked":"" %>>
+                                    <input class="form-check-input" value="man" type="radio" id="one" name="gender" ${param.gender eq "man" ? "checked" : "" }>
                                     <label class="form-check-label" for="one">남자</label>
                               </div>
                               <div class="form-check form-check-inline mb-3">
-                                    <input class="form-check-input" value="woman" type="radio" id="two" name="gender" <%= gender.equals("woman") ? "checked":"" %>>
+                                    <input class="form-check-input" value="woman" type="radio" id="two" name="gender" ${param.gender eq "woman" ? "checked" : "" }>
                                     <label class="form-check-label" for="two">여자</label>
                         </div>
                   </fieldset>
@@ -92,7 +93,7 @@
                   </fieldset>
                   <div>
                   	<label class="form-label" for="comment">하고 싶은 말</label>
-                  	<textarea class="form-control" name="comment" id="comment" rows="10"><%=comment %></textarea>
+                  	<textarea class="form-control" name="comment" id="comment" rows="10">${param.comment}</textarea>
                   </div>
                   <fieldset>
                         <legend>개인정보 활용 동의</legend>
@@ -101,11 +102,11 @@
                               <label class="form-check-label" for="allowAll">전체 동의</label>
                         </div>
                         <div class="form-check form-switch">
-                              <input class="form-check-input allow" type="checkbox"  value="email" name="allowEmail" id="allowEmail" <%= allowEmail !=null ? "checked":"" %>>
+                              <input class="form-check-input allow" type="checkbox"  value="email" name="allowEmail" id="allowEmail" ${not empty param.allowEmail ? "checked" : ""}>
                               <label class="form-check-label" for="allowEmail">이메일 수신여부</label>
                         </div>
                         <div class="form-check form-switch">
-                              <input class="form-check-input allow" type="checkbox"  value="message" name="allowMessage" id="allowMessage" <%= allowMessage !=null ? "checked":"" %>>
+                              <input class="form-check-input allow" type="checkbox"  value="message" name="allowMessage" id="allowMessage" ${not empty param.allowMessage ? "checked" : ""}>
                               <label class="form-check-label" for="allowMessage">광고성 문자 수신여부</label>
                         </div>
                   </fieldset>
