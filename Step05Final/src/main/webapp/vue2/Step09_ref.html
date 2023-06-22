@@ -10,7 +10,12 @@
     <h1>ref 를 이용해서 문서 객체의 참조값 얻어내기</h1> 
     <div id="app">
         <button v-on:click="clicked">눌러보셈</button>
-        <input type="text" ref="one" >
+        <!-- 
+        	Vue에서는 아이디를 배정할 때 여러줄의 코드에서 아이디가 겹칠 우려가 있기 때문에 
+        	id를 배정하는 것이 부담스러울 수 있다.
+        	그래서 아래와 같이 id와 비슷한 기능을 하는 ref 속성명을 배정해서 활용하는 것이 가능하고, 소스에도 공개되지 않는다.
+        -->
+        <input type="text" ref="one">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
