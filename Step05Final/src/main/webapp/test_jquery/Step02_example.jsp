@@ -63,10 +63,10 @@
 	   	               	$("<tr>").append(td1).append(td2).append(td3).appendTo("#one");
    	            	});
    	            	
-	   	         let template = `
-               			<li class="page-item">
-               				<a class="page-link" href="javascript:"></a>
-               			</li>
+	   	         	let template = `
+             			<li class="page-item">
+             				<a class="page-link" href="javascript:"></a>
+             			</li>
                		`;
 	   	            
    	            	if(data.startPageNum != 1){
